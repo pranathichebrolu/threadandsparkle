@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}
+Shop
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <h1 class="text-center mb-5">
+        Our Collection
+    </h1>
+
+    <div class="row">
+
+        {% for product in products %}
+
+        <div class="col-md-6 col-lg-4 mb-4">
+
+            <div class="card shadow position-relative">
+
+                <!-- Wishlist Button -->
+                <form action="{{ url_for('add_to_wishlist') }}"
+                      method="POST"
+                      class="position-absolute top-0 end-0 m-3">
+
+                    <input type="hidden" name="id" value="{{ product.id }}">
+                    <input type="hidden" name="name" value="{{ product.name }}">
+                    <input type="hidden" name="price" value="{{ product.price }}">
+                    <input type="hidden" name="image" value="{{ product.image }}">
+
+                    <button type="submit"
+                            class="btn btn-light rounded-circle shadow border-0">
+
+                        {% if product.id in wishlist_ids %}
+                            <i class="bi bi-heart-fill text-danger fs-4"></i>
+                        {% else %}
+                            <i class="bi bi-heart fs-4"></i>
+                        {% endif %}
+
+                    </button>
+
+                </form>
+
+                <!-- Product Image -->
+                <a href="{{ url_for('product', id=product.id) }}">
+
+                    <img src="{{ url_for('static', filename=product.image) }}"
+                         class="card-img-top"
+                         style="height:370px; object-fit:cover; transition:0.3s;">
+
+                </a>
+
+                <!-- Product Details -->
+                <div class="card-body text-center">
+
+                    <h4>
+
+                        <a href="{{ url_for('product', id=product.id) }}"
+                           class="text-dark text-decoration-none">
+
+                            {{ product.name }}
+
+                        </a>
+
+                    </h4>
+
+                    <p class="text-muted">
+                        {{ product.category }}
+                    </p>
+
+                    <h5 class="text-danger">
+                        ₹{{ product.price }}
+                    </h5>
+
+                    <a href="{{ url_for('product', id=product.id) }}"
+                       class="btn btn-dark mt-2">
+
+                        View Details
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

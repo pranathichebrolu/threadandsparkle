@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Wishlist{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+<h2 class="mb-4">❤️ My Wishlist</h2>
+
+{% if wishlist_items %}
+
+<div class="row">
+
+{% for item in wishlist_items %}
+
+<div class="col-md-4 mb-4">
+
+<div class="card shadow">
+
+<img src="{{ url_for('static', filename=item.image) }}"
+     class="card-img-top"
+     style="height:320px; object-fit:cover;">
+
+<div class="card-body text-center">
+
+<h4>{{ item.name }}</h4>
+
+<h5 class="text-danger">
+₹{{ item.price }}
+</h5>
+
+<a href="/product/{{ item.id }}"
+   class="btn btn-dark">
+
+View Details
+
+</a>
+
+<a href="{{ url_for('remove_from_wishlist', index=loop.index0) }}"
+   class="btn btn-outline-danger mt-2">
+
+Remove
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="alert alert-info">
+
+Your wishlist is empty.
+
+</div>
+
+{% endif %}
+
+</div>
+
+{% endblock %}

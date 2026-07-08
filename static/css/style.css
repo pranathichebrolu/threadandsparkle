@@ -1,0 +1,292 @@
+/* ==========================
+   GLOBAL
+========================== */
+
+body{
+    background:#FFF9F5;
+    font-family:'Poppins',sans-serif;
+}
+
+
+/* ==========================
+   NAVBAR
+========================== */
+
+.navbar{
+    background:white;
+    padding:18px 0;
+}
+
+.logo{
+    font-family:'Cormorant Garamond',serif;
+    font-size:38px;
+    color:#4A1F33 !important;
+    font-weight:700;
+    text-decoration:none;
+}
+
+.logo span{
+    color:#C8A96A;
+}
+
+.nav-link{
+    margin:0 12px;
+    color:#444 !important;
+    font-weight:500;
+}
+
+.nav-link:hover{
+    color:#B76E79 !important;
+}
+
+.bi{
+    cursor:pointer;
+    color:#4A1F33;
+    transition:.3s;
+}
+
+.bi:hover{
+    color:#C8A96A;
+}
+
+
+/* ==========================
+   HERO
+========================== */
+
+.hero{
+    padding:90px 0;
+}
+
+.tagline{
+    letter-spacing:3px;
+    color:#B76E79;
+    font-weight:600;
+}
+
+.hero-title{
+    font-size:65px;
+    font-family:'Cormorant Garamond',serif;
+    color:#4A1F33;
+    margin:20px 0;
+}
+
+.hero-text{
+    font-size:20px;
+    line-height:1.8;
+    color:#666;
+}
+
+.hero-image img{
+    max-height:600px;
+    object-fit:cover;
+}
+
+
+/* ==========================
+   BUTTONS
+========================== */
+
+/* Filled Button */
+
+.btn-shop{
+    background:#B76E79;
+    color:white;
+    padding:15px 35px;
+    border-radius:40px;
+    font-weight:600;
+    border:none;
+}
+
+.btn-shop:hover{
+    background:#4A1F33;
+    color:white;
+}
+
+
+/* Outline Button */
+
+.btn-custom{
+    border:2px solid #B76E79;
+    color:#B76E79;
+    background:white;
+    padding:15px 35px;
+    border-radius:40px;
+    font-weight:600;
+}
+
+.btn-custom:hover{
+    background:#B76E79;
+    color:white;
+}
+
+
+/* ==========================
+   PRODUCT SIZE
+========================== */
+
+.size-options{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+    flex-wrap:wrap;
+}
+
+.size-btn{
+    border:2px solid #8b3057;
+    background:white;
+    padding:10px 18px;
+    border-radius:8px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.size-btn:hover{
+    background:#8b3057;
+    color:white;
+}
+
+.size-btn.active{
+    background:#8b3057;
+    color:white;
+}
+
+
+/* ==========================
+   THREAD COLORS
+========================== */
+
+.thread-colors{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-top:15px;
+}
+
+.color-btn{
+    padding:10px 18px;
+    border:none;
+    border-radius:30px;
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.green{background:#1d7d42;}
+.purple{background:#7c3aed;}
+.blue{background:#2563eb;}
+.red{background:#9f1239;}
+.gold{
+    background:#c69c18;
+    color:black;
+}
+.black{
+    background:black;
+}
+.white{
+    background:white;
+    border:2px solid gray;
+    color:black;
+}
+.pink{
+    background:#ec4899;
+}
+
+
+/* ==========================
+   FORMS
+========================== */
+
+.form-select,
+.form-control,
+textarea{
+    border:2px solid #d6b08b;
+    border-radius:10px;
+    padding:12px;
+    font-size:16px;
+}
+
+.form-select:focus,
+.form-control:focus,
+textarea:focus{
+    border-color:#8b3057;
+    box-shadow:none;
+}
+
+
+/* ==========================
+   WISHLIST BUTTON
+========================== */
+
+.wishlist-btn{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+    transition:.3s;
+}
+
+.wishlist-btn:hover{
+    background:#fde8ec;
+    transform:scale(1.08);
+}
+
+
+/* ==========================
+   PRODUCT CARDS
+========================== */
+
+.card{
+    border:none;
+    border-radius:12px;
+}
+
+.card img{
+    border-radius:12px 12px 0 0;
+}
+
+.card:hover{
+    transform:translateY(-4px);
+    transition:.3s;
+}
+
+
+/* ==========================
+   FOOTER
+========================== */
+
+footer{
+    color:#444;
+}
+.product-card{
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all .35s ease;
+}
+
+.product-card:hover{
+    transform: translateY(-12px);
+    box-shadow: 0 20px 40px rgba(0,0,0,.18) !important;
+}
+
+.product-card img{
+    transition: transform .4s ease;
+}
+
+.product-card:hover img{
+    transform: scale(1.08);
+}
+
+.product-card .btn{
+    transition:.3s;
+}
+
+.product-card:hover .btn{
+    background:#c82333;
+}

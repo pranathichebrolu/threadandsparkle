@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block title %}
+Customize Your Bangles
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <h2 class="text-center mb-5">
+        Customize Your Bangles
+    </h2>
+
+    <form
+        action="/custom_checkout"
+        method="POST"
+        enctype="multipart/form-data">
+
+        <div class="row">
+
+            <!-- Upload Image -->
+
+            <div class="col-md-5">
+
+                <label class="fw-bold mb-2">
+                    Upload Saree / Dress Image
+                </label>
+
+                <input
+                    type="file"
+                    name="image"
+                    id="imageInput"
+                    class="form-control"
+                    accept="image/*"
+                    required>
+
+                <div class="mt-4 text-center">
+
+                    <img
+                        id="previewImage"
+                        src=""
+                        class="img-fluid rounded shadow"
+                        style="display:none; max-height:420px;">
+
+                </div>
+
+            </div>
+
+            <!-- Customization Form -->
+
+            <div class="col-md-7">
+
+                <label class="fw-bold">
+                    Bangle Size
+                </label>
+
+                <select
+                    class="form-select mb-3"
+                    name="size"
+                    required>
+
+                    <option value="">Select Size</option>
+
+                    <option>2.2</option>
+                    <option>2.4</option>
+                    <option>2.6</option>
+                    <option>2.8</option>
+
+                </select>
+
+                <label class="fw-bold">
+                    Thread Color
+                </label>
+
+                <select
+                    class="form-select mb-3"
+                    name="thread_color"
+                    required>
+
+                    <option value="">Select Thread Color</option>
+
+                    <option>Bottle Green</option>
+                    <option>Purple</option>
+                    <option>Royal Blue</option>
+                    <option>Maroon</option>
+                    <option>Pink</option>
+                    <option>Gold</option>
+                    <option>Black</option>
+                    <option>White</option>
+                    <option>Yellow</option>
+                    <option>Orange</option>
+                    <option>Peach</option>
+                    <option>Sky Blue</option>
+                    <option>Navy Blue</option>
+                    <option>Parrot Green</option>
+                    <option>Wine</option>
+                    <option>Red</option>
+
+                </select>
+
+                
+
+                
+
+                
+
+                <label class="fw-bold">
+                    Customization Instructions
+                </label>
+
+                <textarea
+                    class="form-control mb-3"
+                    rows="4"
+                    name="instructions"
+                    placeholder="Mention saree color, stones, names, matching blouse, etc."></textarea>
+
+                <button
+                    type="submit"
+                    class="btn btn-dark btn-lg w-100">
+
+                    Continue to Checkout
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+<script>
+
+const imageInput = document.getElementById("imageInput");
+const preview = document.getElementById("previewImage");
+
+imageInput.addEventListener("change", function () {
+
+    if (this.files.length > 0) {
+
+        preview.src = URL.createObjectURL(this.files[0]);
+        preview.style.display = "block";
+
+    }
+
+});
+
+</script>
+
+{% endblock %}

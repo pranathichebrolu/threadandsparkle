@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Order Successful{% endblock %}
+
+{% block content %}
+
+<div class="container py-5 text-center">
+
+    <div class="card shadow p-5">
+
+        <h1 class="text-success">
+            ✅ Order Placed Successfully!
+        </h1>
+
+        <hr>
+
+        <h3>Thank You, {{ customer.name }}</h3>
+
+        <p>Your order has been placed successfully.</p>
+
+        <h4 class="mt-4">Order Details</h4>
+
+        <p><strong>Product:</strong> {{ order.name }}</p>
+
+        <p><strong>Price:</strong> ₹{{ order.price }}</p>
+
+        <p><strong>Size:</strong> {{ order.size }}</p>
+
+        <p><strong>Thread Color:</strong> {{ order.thread_color }}</p>
+
+        <p><strong>Payment:</strong> {{ customer.payment }}</p>
+
+        <p><strong>Phone:</strong> {{ customer.phone }}</p>
+
+        <p><strong>Address:</strong><br>{{ customer.address }}</p>
+
+        <a href="/" class="btn btn-dark mt-4">
+            Continue Shopping
+        </a>
+
+    </div>
+<a href="{{ url_for('my_orders') }}"
+class="btn btn-success">
+
+View My Orders
+
+</a>
+</div>
+
+{% endblock %}

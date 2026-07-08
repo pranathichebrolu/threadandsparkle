@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}
+Thread & Sparkle
+{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+
+<div class="container">
+
+<div class="row align-items-center">
+
+<div class="col-lg-6">
+
+<p class="tagline">
+✨ HANDCRAFTED • CUSTOM MADE • PREMIUM
+</p>
+
+<h1 class="hero-title">
+Luxury Silk Thread Bangles
+</h1>
+
+<p class="hero-text">
+
+Designed with elegance for weddings,
+festivals, gifts and everyday beauty.
+
+Choose your size, thread color,
+stones and customize every bangle.
+
+</p>
+
+<div class="mt-4">
+
+<a href="{{ url_for('shop') }}"
+   class="btn btn-custom me-3">
+    Shop Collection
+</a>
+
+<a href="{{ url_for('customize') }}"
+   class="btn btn-outline-custom">
+    Customize Yours
+</a>
+
+</div>
+
+</div>
+
+<div class="col-lg-6 text-center">
+
+<div class="hero-image">
+<img src="{{ url_for('static', filename='images/banners/logo.png') }}"
+     class="hero-img">
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+{% endblock %}  

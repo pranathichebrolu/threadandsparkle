@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}
+Contact Us
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="text-center mb-5">
+        <h2>Contact Us</h2>
+        <p class="text-muted">
+            We'd love to hear from you. Send us your message.
+        </p>
+    </div>
+
+    <div class="row">
+
+        <!-- Contact Form -->
+        <div class="col-md-7">
+
+            <div class="card shadow border-0 p-4">
+
+                <h3 class="mb-4">Send us a Message</h3>
+
+                <form action="{{ url_for('send_message') }}" method="POST">
+
+                    <!-- Name -->
+                    <input
+                        type="text"
+                        name="name"
+                        class="form-control mb-3"
+                        placeholder="Your Name"
+                        required
+                        pattern="[A-Za-z ]+"
+                        title="Only alphabets are allowed">
+
+                    <!-- Email -->
+                    <input
+                        type="email"
+                        name="email"
+                        class="form-control mb-3"
+                        placeholder="Your Email"
+                        required
+                        pattern="^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com|hotmail\.com|icloud\.com)$"
+                        title="Please enter a valid Gmail, Yahoo, Outlook, Hotmail or iCloud email">
+
+                    <!-- Message -->
+                    <textarea
+                        name="message"
+                        class="form-control mb-3"
+                        rows="6"
+                        placeholder="Write your message..."
+                        required></textarea>
+
+                    <button type="submit" class="btn btn-dark w-100">
+                        Send Message
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        <!-- Contact Details -->
+        <div class="col-md-5">
+
+            <div class="card shadow border-0 p-4">
+
+                <h3 class="mb-4">Contact Details</h3>
+
+                <p>
+                    <strong>Email</strong><br>
+                    <a href="mailto:piyushachebrolu26@gmail.com" class="text-dark text-decoration-none">
+                        piyushachebrolu26@gmail.com
+                    </a>
+                </p>
+
+                <p>
+                    <strong>Instagram</strong><br>
+                    <a href="https://www.instagram.com/threadsparkle" target="_blank" class="text-dark text-decoration-none">
+                        @thread&sparkle
+                    </a>
+                </p>
+
+                
+
+                <p>
+                    <strong>Customer Support</strong><br>
+                    Monday – Saturday<br>
+                    Reply within 24 hours
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

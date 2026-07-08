@@ -1,0 +1,255 @@
+{% extends "base.html" %}
+
+{% block title %}
+Checkout
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <h2 class="mb-4 text-center">
+        Checkout
+    </h2>
+
+    <div class="row">
+
+        <!-- Order Summary -->
+
+        <div class="col-md-5">
+
+            <img src="{{ url_for('static', filename=order.image) }}"
+                 class="img-fluid rounded shadow">
+
+            <h4 class="mt-3">
+                {{ order.name }}
+            </h4>
+
+            {% if order.price == "To Be Confirmed" %}
+
+            <h5 class="text-danger">
+                Price: To Be Confirmed
+            </h5>
+
+            {% else %}
+
+            <h5 class="text-danger">
+                ₹{{ order.price }}
+            </h5>
+
+            {% endif %}
+
+            <hr>
+
+            <p><b>Size:</b> {{ order.size }}</p>
+
+            <p><b>Thread Color:</b> {{ order.thread_color }}</p>
+
+            {% if order.stone_color %}
+            <p><b>Stone Color:</b> {{ order.stone_color }}</p>
+            {% endif %}
+
+            {% if order.quantity %}
+            <p><b>Quantity:</b> {{ order.quantity }}</p>
+            {% endif %}
+
+            <p><b>Instructions:</b> {{ order.instructions }}</p>
+
+        </div>
+
+        <!-- Customer Details -->
+
+        <div class="col-md-7">
+
+            <form action="{{ url_for('place_order') }}" method="POST" enctype="multipart/form-data">
+
+                <!-- Name -->
+
+                <input
+                    type="text"
+                    class="form-control mb-3"
+                    name="customer_name"
+                    placeholder="Full Name"
+                    required
+                    pattern="[A-Za-z ]+"
+                    title="Only alphabets are allowed">
+
+                <!-- Phone -->
+
+                <input
+                    type="tel"
+                    name="phone"
+                    class="form-control mb-3"
+                    placeholder="Phone Number"
+                    pattern="[0-9]{10}"
+                    maxlength="10"
+                    required
+                    oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+
+                <!-- Address -->
+
+                <textarea
+                    class="form-control mb-3"
+                    name="address"
+                    rows="4"
+                    placeholder="Delivery Address"
+                    required></textarea>
+
+                <!-- Payment -->
+
+                <select
+                    id="paymentMethod"
+                    class="form-select mb-4"
+                    name="payment"
+                    required>
+
+                    <option value="COD">Cash On Delivery</option>
+                    <option value="UPI">UPI</option>
+                    <option value="Debit">Debit Card</option>
+                    <option value="Credit">Credit Card</option>
+
+                </select>
+
+                <!-- Dynamic Payment Details -->
+
+                <div id="paymentDetails"></div>
+
+                <button
+                    type="submit"
+                    class="btn btn-dark btn-lg w-100 mt-4">
+
+                    Place Order
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const payment = document.getElementById("paymentMethod");
+const details = document.getElementById("paymentDetails");
+
+payment.addEventListener("change", function(){
+
+    // Cash On Delivery
+
+    if(this.value === "COD"){
+
+        details.innerHTML = "";
+
+    }
+
+    // UPI
+
+    else if(this.value === "UPI"){
+
+        details.innerHTML = `
+
+        <div class="text-center mt-3">
+
+            <img
+                src="/static/images/qr.png"
+                width="220"
+                class="img-fluid">
+
+            <br><br>
+
+            <h5>UPI ID</h5>
+
+            <b>threadsparkle@upi</b>
+
+            <p class="text-muted mt-2">
+                Scan the QR code and complete the payment.
+            </p>
+
+            <label class="form-label mt-3">
+                Upload Payment Screenshot
+            </label>
+
+            <input
+                type="file"
+                name="upi_screenshot"
+                class="form-control"
+                accept="image/*"
+                required>
+
+        </div>
+
+        `;
+
+    }
+
+    // Debit / Credit
+
+    else{
+
+        details.innerHTML = `
+
+        <div class="mt-3">
+
+            <input
+                type="text"
+                name="card_number"
+                class="form-control mb-3"
+                placeholder="Card Number"
+                maxlength="16"
+                pattern="[0-9]{16}"
+                required
+                oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+
+            <input
+                type="text"
+                name="card_name"
+                class="form-control mb-3"
+                placeholder="Name on Card"
+                required>
+
+            <div class="row">
+
+                <div class="col">
+
+                    <input
+                        type="text"
+                        name="expiry"
+                        class="form-control"
+                        placeholder="MM/YY"
+                        pattern="(0[1-9]|1[0-2])/[0-9]{2}"
+                        required>
+
+                </div>
+
+                <div class="col">
+
+                    <input
+                        type="password"
+                        name="cvv"
+                        class="form-control"
+                        placeholder="CVV"
+                        maxlength="3"
+                        pattern="[0-9]{3}"
+                        required
+                        oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+
+                </div>
+
+            </div>
+
+        </div>
+
+        `;
+
+    }
+
+});
+
+payment.dispatchEvent(new Event("change"));
+
+</script>
+
+{% endblock %}

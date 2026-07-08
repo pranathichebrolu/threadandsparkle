@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}
+My Orders
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <h2 class="mb-4">
+        My Orders
+    </h2>
+
+    {% if orders %}
+
+        {% for item in orders %}
+
+        <div class="card mb-4 shadow-sm">
+
+            <div class="row g-0">
+
+                <div class="col-md-3">
+
+                    {% if item["image"] %}
+
+                    <img
+                        src="{{ url_for('static', filename=item['image']) }}"
+                        class="img-fluid rounded-start"
+                        style="height:220px; width:100%; object-fit:cover;">
+
+                    {% else %}
+
+                    <img
+                        src="{{ url_for('static', filename='images/no-image.png') }}"
+                        class="img-fluid rounded-start"
+                        style="height:220px; width:100%; object-fit:cover;">
+
+                    {% endif %}
+
+                </div>
+
+                <div class="col-md-9">
+
+                    <div class="card-body">
+
+                        <h4>{{ item["product_name"] }}</h4>
+
+                        <p><b>Price:</b> {{ item["price"] }}</p>
+
+                        <p><b>Size:</b> {{ item["size"] }}</p>
+
+                        <p><b>Thread Color:</b> {{ item["thread_color"] }}</p>
+
+                        <p><b>Instructions:</b> {{ item["instructions"] }}</p>
+
+                        <p><b>Payment:</b> {{ item["payment"] }}</p>
+
+                        <p><b>Delivery Address:</b> {{ item["address"] }}</p>
+
+                        <p>
+
+                            <b>Status:</b>
+
+                            {% if item["status"] == "Pending" %}
+
+                                <span class="badge bg-warning text-dark">
+                                    {{ item["status"] }}
+                                </span>
+
+                            {% elif item["status"] == "Processing" %}
+
+                                <span class="badge bg-info">
+                                    {{ item["status"] }}
+                                </span>
+
+                            {% elif item["status"] == "Shipped" %}
+
+                                <span class="badge bg-primary">
+                                    {{ item["status"] }}
+                                </span>
+
+                            {% elif item["status"] == "Out for Delivery" %}
+
+                                <span class="badge bg-secondary">
+                                    {{ item["status"] }}
+                                </span>
+
+                            {% elif item["status"] == "Delivered" %}
+
+                                <span class="badge bg-success">
+                                    {{ item["status"] }}
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge bg-dark">
+                                    {{ item["status"] }}
+                                </span>
+
+                            {% endif %}
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+    <div class="alert alert-info">
+
+        No orders placed yet.
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

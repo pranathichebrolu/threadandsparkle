@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block title %}
+Admin Orders
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <h2 class="mb-4">
+        Admin Orders
+    </h2>
+
+    {% if orders %}
+
+    <table class="table table-bordered align-middle">
+
+        <thead class="table-dark">
+
+            <tr>
+
+                <th>ID</th>
+
+                <th>Customer</th>
+
+                <th>Product</th>
+
+                <th>Image</th>
+
+                <th>Status</th>
+
+                <th>Update</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% for item in orders %}
+
+        <tr>
+
+            <td>{{ item["id"] }}</td>
+
+            <td>
+
+                <b>{{ item["customer_name"] }}</b><br>
+
+                {{ item["phone"] }}
+
+            </td>
+
+            <td>
+
+                {{ item["product_name"] }}<br>
+
+                ₹{{ item["price"] }}
+
+            </td>
+
+            <td>
+
+                {% if item["image"] %}
+
+                <img
+                src="{{ url_for('static', filename=item['image']) }}"
+                width="70"
+                class="rounded">
+
+                {% endif %}
+
+            </td>
+
+            <td>
+
+                <span class="badge bg-primary">
+
+                    {{ item["status"] }}
+
+                </span>
+
+            </td>
+
+            <td>
+
+                <form
+                action="{{ url_for('update_status', order_id=item['id']) }}"
+                method="POST">
+
+                    <select
+                    name="status"
+                    class="form-select mb-2">
+
+                        <option value="Pending"
+                        {% if item["status"]=="Pending" %}selected{% endif %}>
+                        Pending
+                        </option>
+
+                        <option value="Processing"
+                        {% if item["status"]=="Processing" %}selected{% endif %}>
+                        Processing
+                        </option>
+
+                        <option value="Shipped"
+                        {% if item["status"]=="Shipped" %}selected{% endif %}>
+                        Shipped
+                        </option>
+
+                        <option value="Out for Delivery"
+                        {% if item["status"]=="Out for Delivery" %}selected{% endif %}>
+                        Out for Delivery
+                        </option>
+
+                        <option value="Delivered"
+                        {% if item["status"]=="Delivered" %}selected{% endif %}>
+                        Delivered
+                        </option>
+
+                    </select>
+
+                    <button
+                    class="btn btn-dark btn-sm w-100">
+
+                        Update
+
+                    </button>
+
+                </form>
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    {% else %}
+
+    <div class="alert alert-warning">
+
+        No Orders Yet.
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
