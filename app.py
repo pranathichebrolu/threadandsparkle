@@ -9,7 +9,6 @@ from werkzeug.utils import secure_filename
 import sqlite3
 DB_PATH = os.path.join(os.path.dirname(__file__), "threadsparkle.db")
 app = Flask(__name__)
-import sqlite3
 
 def create_database():
     conn = sqlite3.connect(DB_PATH)
@@ -40,7 +39,7 @@ try:
     print("Database created successfully")
 except Exception as e:
     print("Database Error:", e)
-print("Database created successfully")
+
 load_dotenv()
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_PORT"] = 587
@@ -335,18 +334,28 @@ def place_order():
     if not order:
         return redirect(url_for("shop"))
 
-    # Continue with database insertion...
-    
-
-    # Save order in session
-        # Save order in database
-
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
-    print("Creating orders table...")
 
     cursor.execute("""
-    INSERT INTO orders(
+    CREATE TABLE IF NOT EXISTS orders (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        customer_name TEXT,
+        phone TEXT,
+        address TEXT,
+        product_name TEXT,
+        price TEXT,
+        size TEXT,
+        thread_color TEXT,
+        instructions TEXT,
+        payment TEXT,
+        image TEXT,
+        status TEXT
+    )
+    """)
+
+    cursor.execute("""
+    INSERT INTO orders (
         customer_name,
         phone,
         address,
@@ -377,12 +386,10 @@ def place_order():
     conn.commit()
     conn.close()
 
-    # ---------- EMAIL ----------
-
     msg = Message(
         subject="New Thread & Sparkle Order",
         sender=app.config["MAIL_USERNAME"],
-        recipients=["piyushachebrolu26@gmail.com"]   # Your email
+        recipients=["piyushachebrolu26@gmail.com"]
     )
 
     msg.body = f"""
@@ -406,15 +413,12 @@ Address:
 {customer['address']}
 """
 
-    # Attach uploaded image (only for customized orders)
     if order.get("price") == "To Be Confirmed" and order.get("image"):
 
         image_path = os.path.join("static", order["image"])
 
         if os.path.exists(image_path):
-
             with app.open_resource(image_path) as img:
-
                 msg.attach(
                     filename=os.path.basename(image_path),
                     content_type=mimetypes.guess_type(image_path)[0] or "application/octet-stream",
@@ -422,11 +426,9 @@ Address:
                 )
 
     mail.send(msg)
+
     session.pop("cart", None)
     session.modified = True
-
-
-    # ---------- EMAIL NOTIFICATION ENDS HERE ----------
 
     return render_template(
         "order_success.html",
