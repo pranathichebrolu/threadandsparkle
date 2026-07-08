@@ -46,6 +46,7 @@ app.config["MAIL_PORT"] = 587
 app.config["MAIL_USE_TLS"] = True
 app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")
 app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")
+app.config["MAIL_DEFAULT_SENDER"] = os.getenv("MAIL_USERNAME")
 
 mail = Mail(app)
 app.secret_key = os.getenv("SECRET_KEY")
@@ -386,47 +387,7 @@ def place_order():
     conn.commit()
     conn.close()
 
-    msg = Message(
-        subject="New Thread & Sparkle Order",
-        sender=app.config["MAIL_USERNAME"],
-        recipients=["piyushachebrolu26@gmail.com"]
-    )
-
-    msg.body = f"""
-New Order Received
-
-Customer: {customer['name']}
-Phone: {customer['phone']}
-
-Product: {order['name']}
-Price: {order['price']}
-
-Size: {order['size']}
-Thread Color: {order['thread_color']}
-
-Instructions:
-{order['instructions']}
-
-Payment: {customer['payment']}
-
-Address:
-{customer['address']}
-"""
-
-    if order.get("price") == "To Be Confirmed" and order.get("image"):
-
-        image_path = os.path.join("static", order["image"])
-
-        if os.path.exists(image_path):
-            with app.open_resource(image_path) as img:
-                msg.attach(
-                    filename=os.path.basename(image_path),
-                    content_type=mimetypes.guess_type(image_path)[0] or "application/octet-stream",
-                    data=img.read()
-                )
-
-    mail.send(msg)
-
+    # Clear cart after successful order
     session.pop("cart", None)
     session.modified = True
 
@@ -434,22 +395,6 @@ Address:
         "order_success.html",
         customer=customer,
         order=order
-    )
-@app.route("/my_orders")
-def my_orders():
-
-    conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT * FROM orders")
-    orders = cursor.fetchall()
-
-    conn.close()
-
-    return render_template(
-        "my_orders.html",
-        orders=orders
     )
     
 @app.route("/update_status/<int:order_id>", methods=["POST"])
