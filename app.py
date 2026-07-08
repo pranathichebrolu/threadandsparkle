@@ -7,7 +7,40 @@ import os
 from dotenv import load_dotenv
 from werkzeug.utils import secure_filename
 import sqlite3
+DB_PATH = os.path.join(os.path.dirname(__file__), "threadsparkle.db")
 app = Flask(__name__)
+import sqlite3
+
+def create_database():
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS orders (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        customer_name TEXT,
+        phone TEXT,
+        address TEXT,
+        product_name TEXT,
+        price TEXT,
+        size TEXT,
+        thread_color TEXT,
+        instructions TEXT,
+        payment TEXT,
+        image TEXT,
+        status TEXT
+    )
+    """)
+
+    conn.commit()
+    conn.close()
+print("Creating database...")
+try:
+    create_database()
+    print("Database created successfully")
+except Exception as e:
+    print("Database Error:", e)
+print("Database created successfully")
 load_dotenv()
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_PORT"] = 587
@@ -308,8 +341,9 @@ def place_order():
     # Save order in session
         # Save order in database
 
-    conn = sqlite3.connect("threadsparkle.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
+    print("Creating orders table...")
 
     cursor.execute("""
     INSERT INTO orders(
@@ -402,7 +436,7 @@ Address:
 @app.route("/my_orders")
 def my_orders():
 
-    conn = sqlite3.connect("threadsparkle.db")
+    conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
 
@@ -424,7 +458,7 @@ def update_status(order_id):
 
     status = request.form["status"]
 
-    conn = sqlite3.connect("threadsparkle.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute(
@@ -443,7 +477,7 @@ def admin_orders():
     if not session.get("admin"):
         return redirect(url_for("admin_login"))
 
-    conn = sqlite3.connect("threadsparkle.db")
+    conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
 
